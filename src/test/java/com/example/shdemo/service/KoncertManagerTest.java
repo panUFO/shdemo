@@ -53,8 +53,8 @@ public class KoncertManagerTest {
 
     Klub klub = new Klub();
 
-    Klub firstToDelete, secondToDelete;
-/*
+ /*   Klub firstToDelete, secondToDelete;
+
     @Before
     public void addExamplesKoncerts()
     {
@@ -64,11 +64,13 @@ public class KoncertManagerTest {
         klub.setIlosc_miejsc(ILOSCM_1);
         klubManager.addKlub(firstToDelete);
 
+
         Klub secondToDelete = new Klub();
         klub.setMiasto(MIASTO_2);
         klub.setNazwa(NAZWA_2);
         klub.setIlosc_miejsc(ILOSCM_2);
         klubManager.addKlub(secondToDelete);
+
 
     }
     @After

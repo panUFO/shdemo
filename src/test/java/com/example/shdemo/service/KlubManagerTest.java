@@ -41,6 +41,34 @@ public class KlubManagerTest {
     private final int ILOSCM_2 = 1500;
 
 
+    Klub firstToDelete, secondToDelete;
+
+    @Before
+    public void addExamplesKlubs()
+    {
+        firstToDelete = new Klub();
+        firstToDelete.setMiasto("Ozarow");
+        firstToDelete.setNazwa("Protector");
+        firstToDelete.setIlosc_miejsc(99);
+        klubManager.addKlub(firstToDelete);
+
+
+        secondToDelete = new Klub();
+        secondToDelete.setMiasto("Sandomierz");
+        secondToDelete.setNazwa("Bajlando");
+        secondToDelete.setIlosc_miejsc(500);
+        klubManager.addKlub(secondToDelete);
+    }
+
+    @After
+    public void deleteExamplesKlubs()
+    {
+        klubManager.deleteKlub(firstToDelete);
+        klubManager.deleteKlub(secondToDelete);
+
+    }
+
+
     @Test
     public void addKlubTest() {
         Klub klub = new Klub();
