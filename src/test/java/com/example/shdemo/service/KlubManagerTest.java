@@ -152,7 +152,7 @@ public class KlubManagerTest {
 
         assertTrue(!KlubafterDel.contains(retrievedKlub));
 
-        for (Klub k : KlubafterDel){
+        for (Klub k : KlubafterDel) {
             assertTrue(Klublist.contains(k));
         }
 
