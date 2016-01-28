@@ -117,7 +117,7 @@ public class KoncertManagerTest {
         koncertManager.addKoncert(koncert);
         assertNotNull(koncert);
 
-        Koncert koncert1 = koncertManager.getAllKoncerts().get(1);
+        Koncert koncert1 = koncertManager.getAllKoncerts().get(0);
         Koncert receivedKoncert = koncertManager.getKoncertByID(koncert1.getIdKoncert());
         assertEquals(koncert1.getIdKoncert(), receivedKoncert.getIdKoncert());
     }
@@ -138,8 +138,10 @@ public class KoncertManagerTest {
         koncertManager.addKoncert(koncert);
         assertNotNull(koncert);
 
-        /*Koncert koncert = koncertManager.getAllKoncerts().get(0);
-        assertNotNull(koncert);*/
+        Koncert koncertReceived = koncertManager.getAllKoncerts().get(0);
+        assertNotNull(koncertReceived);
+        assertEquals(koncertReceived.getNazwa_koncertu(), koncert.getNazwa_koncertu());
+
         Klub newKlub = new Klub();
         newKlub.setMiasto(MIASTO_2);
         newKlub.setNazwa(NAZWA_2);
@@ -153,40 +155,7 @@ public class KoncertManagerTest {
 
         assertEquals(koncertManager.getAllKoncerts().get(0).getKlub().getNazwa(), newKlub.getNazwa());
     }
-/*
-    @Test
-    public void deleteKoncertTest() {
-        List<Koncert> listKoncert = koncertManager.getAllKoncerts();
-        int nrKoncerts = listKoncert.size();
-        Koncert retrievedKoncert = listKoncert.get(nrKoncerts -1);
 
-        List<Klub> listKlubs = klubManager.getAllKlubs();
-
-
-        for (Klub ko : listKlubs) {
-
-            int index = -1;
-
-            for (Koncert kl : ko.getKoncerts()) {
-                if (kl == retrievedKoncert) {
-                    index = ko.getKoncerts().indexOf(kl);
-                    break;
-                }
-            }
-
-            if (index != -1)
-                ko.getKoncerts().remove(index);
-        }
-
-        koncertManager.deleteKoncert(retrievedKoncert);
-        assertEquals(nrKoncerts - 1, koncertManager.getAllKoncerts().size());
-        List<Koncert> listKoncertsAfterDelete = koncertManager.getAllKoncerts();
-        assertTrue(!listKoncertsAfterDelete.contains(retrievedKoncert));
-
-        for (Koncert ko : listKoncertsAfterDelete) {
-            assertTrue(listKoncert.contains(ko));
-        }
-    }*/
 
     @Test
     public void deleteKoncertTest() {
@@ -215,21 +184,33 @@ public class KoncertManagerTest {
 
     @Test
     public void getKoncertByKlubIDTest() {
-        Klub klub = klubManager.getAllKlubs().get(klubManager.getAllKlubs().size() - 1);
-        Koncert koncert = koncertManager.getAllKoncerts().get(koncertManager.getAllKoncerts().size() - 1);
+        Klub klub = new Klub();
+        klub.setMiasto(MIASTO_1);
+        klub.setNazwa(NAZWA_1);
+        klub.setIlosc_miejsc(ILOSCM_1);
+        assertNotNull(klub);
 
-        assertEquals(klub.getIdKlub(), koncert.getKlub().getIdKlub());
+        Koncert koncert = new Koncert();
+        koncert.setNazwa_koncertu(NAZWA_KONCERTU1);
+        koncert.setCeny_biletow(CENY_BILETOW1);
+        koncert.setKlub(klub);
+        koncertManager.addKoncert(koncert);
+        assertNotNull(koncert);
 
-        List<Koncert> klubKoncert = koncertManager.getKoncertByKlubID(klub);
 
-        assertTrue(klubKoncert.contains(klub));
+        Klub klub1 = klubManager.getAllKlubs().get(klubManager.getAllKlubs().size() - 1);
+        assertNotNull(klub1);
+        assertEquals(klub1.getMiasto(), klub.getMiasto());
 
-        for (Koncert ko : klubKoncert) {
-            if (ko.getIdKoncert() == koncert.getIdKoncert()) {
+        Koncert koncert1 = koncertManager.getAllKoncerts().get(koncertManager.getAllKoncerts().size() - 1);
+        assertNotNull(koncert1);
+        assertEquals(koncert1.getNazwa_koncertu(), koncert.getNazwa_koncertu());
 
-                assertEquals(ko.getKlub().getIdKlub(), koncert.getKlub().getIdKlub());
-            }
-        }
+        assertEquals(klub1.getIdKlub(), koncert1.getKlub().getIdKlub());
+
+        List<Koncert> klubKoncert = koncertManager.getKoncertByKlubID(klub1);
+        assertNotNull(klubKoncert);
+        assertEquals(klubKoncert.get(0).getKlub().getIdKlub(), klub1.getIdKlub());
 
     }
 
